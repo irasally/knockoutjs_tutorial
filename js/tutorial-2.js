@@ -18,6 +18,10 @@ function ReservationsViewModel(){
     new SeatReservation("Steve", self.availableMeals[0]),
     new SeatReservation("John", self.availableMeals[1])
   ]);
+
+  self.addSeat = function(){
+    self.seats.push(new SeatReservation("", self.availableMeals[0]));
+  };
 }
 
 ko.applyBindings(new ReservationsViewModel());
