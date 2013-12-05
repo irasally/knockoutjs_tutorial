@@ -25,21 +25,15 @@ function ReservationsViewModel(){
   ]);
 
   self.addSeat = function(){
-    console.log(self.seats);
-    console.log(self.seats());
     self.seats.push(new SeatReservation("", self.availableMeals[0]));
   };
 
   self.removeSeat = function(seat){
-    console.log(self.seats);
-    console.log(self.seats());
     self.seats.remove(seat);
   };
 
   self.totalSurchage = ko.computed(function(){
     var total = 0;
-    console.log(self.seats);
-    console.log(self.seats());
     for(var i = 0; i < self.seats().length; i++){
       total += self.seats()[i].meal().price;
     }
