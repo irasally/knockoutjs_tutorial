@@ -8,16 +8,23 @@ function WebmailViewModel(){
 
   // Behaviors
   self.goToFolder = function(folder){
-    self.chosenFolderId(folder);
-    self.chosenMailData(null);
-    $.get('/mail', {folder: folder}, self.chosenFolderData);
+    location.hash = folder;
   };
   self.goToMail = function(mail){
-    self.chosenFolderId(mail.folder);
-    self.chosenFolderData(null);
-    $.get('/mail', {mailId: mail.id}, self.chosenMailData);
+    location.hash = mail.folder + '/' + mail.id;
   };
-  // init
-  self.goToFolder('Inbox');
+  Sammy(function() {
+    this.get('#:folder', function() {
+      self.chosenFolderId(folder);
+      self.chosenMailData(null);
+      $.get('/mail', {folder: folder}, self.chosenFolderData);
+    });
+    this.get('#:folder/:mailId', function() {
+      self.chosenFolderId(mail.folder);
+      self.chosenFolderData(null);
+      $.get('/mail', {mailId: mail.id}, self.chosenMailData);
+    });
+    this.get('', function() { this.app.runRoute('get', '#Inbox');});
+  }).run();
 }
 ko.applyBindings(new WebmailViewModel());
